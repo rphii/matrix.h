@@ -83,5 +83,6 @@ $ gcc example.c && ./a.out
     - `float` -> the underlying matrix type
 5. Keep `out` value different from `A` and `B` (it is unsafe to assume a function does not modify `A` or `B` if either is the same variable as `out`
 6. If `A` is the only argument, the operation is in-place _(cholesky, invert)_
-7. Dimension verification happens at compile-time, via `_Decl` and `_Impl`, but **!! NEVER !!** during runtime, as the matrix is a simple 1-dimensional array and nothing more.
+7. Dimension verification happens at compile-time, via `_Decl` and `_Impl`, but **!! NEVER !!** during runtime, as the matrix is a simple 1-dimensional array and nothing more
+8. Implementations always use ONE type for everything
 
