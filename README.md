@@ -1,6 +1,6 @@
 # matrix.h
 
-Matrix prototype header targetted for low-memory systems
+Matrix prototype header targeted for low-memory systems
 
 ## [Example](example.c)
 
