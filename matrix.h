@@ -1,3 +1,5 @@
+/* ROW MAJOR matrix */
+
 #ifndef MATRIX_H
 
 #include <assert.h>
@@ -20,6 +22,26 @@
  *   C : Q2(rows) x Q1(cols)
  * }}} */
 
+/* {{{ matrix_sum : (T)out += a[..][..] */
+#define  Matrix_Decl_Sum(X) \
+        _Matrix_Decl_Sum(X)
+#define _Matrix_Decl_Sum(A, S2, S1, T) \
+    T matrix_##A##S2##x##S1##_sum( \
+            Matrix_Type(A,S2,S1));
+#define  Matrix_Impl_Sum(X)   \
+        _Matrix_Impl_Sum(X)
+#define _Matrix_Impl_Sum(A, S2, S1, T) \
+    T matrix_##A##S2##x##S1##_sum( \
+            Matrix_Type(A,S2,S1) a) { \
+        T result = 0; \
+        for(int s2 = 0; s2 < S2; ++s2) { \
+            for(int s1 = 0; s1 < S1; ++s1) { \
+                result += a[s2*S1+s1]; \
+            } \
+        } \
+        return result; \
+    } /*}}}*/
+
 /* {{{ matrix_mul : out = a * b */
 #define  Matrix_Decl_Mul(Z, X, Y) \
         _Matrix_Decl_Mul(Z, X, Y)
@@ -41,13 +63,14 @@
             Matrix_Type(C,Q2,Q1) out, \
             Matrix_Type(A,S2,S1) a, \
             Matrix_Type(B,R2,R1) b) { \
+        memset(out, 0, sizeof(T) * Q2 * Q1); \
         for(int q2 = 0; q2 < Q2; ++q2) { \
-            for(int q1 = 0; q1 < Q1; ++q1) { \
-                T tmp = {0}; \
-                for(int s1 = 0; s1 < S1; ++s1) { \
-                    tmp += a[q2*S1+s1] * b[s1*R1+q1]; \
+            for(int s1 = 0; s1 < S1; ++s1) { \
+                for(int q1 = 0; q1 < Q1; ++q1) { \
+                    out[q2*Q1+q1] += \
+                      a[q2*S1+s1] *  \
+                      b[s1*R1+q1]; \
                 } \
-                out[q2*Q1+q1] = tmp; \
             } \
         } \
     } /*}}}*/
@@ -73,13 +96,14 @@
             Matrix_Type(C,Q2,Q1) out, \
             Matrix_Type(A,S2,S1) a, \
             Matrix_Type(B,R2,R1) b) { \
+        memset(out, 0, sizeof(T) * Q2 * Q1); \
         for(int q2 = 0; q2 < Q2; ++q2) { \
             for(int q1 = 0; q1 < Q1; ++q1) { \
-                T tmp = {0}; \
                 for(int s1 = 0; s1 < S1; ++s1) { \
-                    tmp += a[q2*S1+s1] * b[q1*R1+s1]; \
+                    out[q2*Q1+q1] += \
+                      a[q2*S1+s1] *  \
+                      b[q1*R1+s1]; \
                 } \
-                out[q2*Q1+q1] = tmp; \
             } \
         } \
     } /*}}}*/
@@ -105,13 +129,14 @@
             Matrix_Type(C,Q2,Q1) out, \
             Matrix_Type(A,S2,S1) a, \
             Matrix_Type(B,R2,R1) b) { \
+        memset(out, 0, sizeof(T) * Q2 * Q1); \
         for(int q2 = 0; q2 < Q2; ++q2) { \
             for(int q1 = 0; q1 < Q1; ++q1) { \
-                T tmp = {0}; \
                 for(int s1 = 0; s1 < S1; ++s1) { \
-                    tmp += a[q2*S1+s1] * b[q1*R1+s1]; \
+                    out[q2*Q1+q1] += \
+                      a[q2*S1+s1] *  \
+                      b[q1*R1+s1]; \
                 } \
-                out[q2*Q1+q1] += tmp; \
             } \
         } \
     } /*}}}*/
@@ -139,13 +164,14 @@
             Matrix_Type(A,S2,S1) a, \
             Matrix_Type(B,R2,R1) b, \
             T scale) { \
+        memset(out, 0, sizeof(T) * Q2 * Q1); \
         for(int q2 = 0; q2 < Q2; ++q2) { \
             for(int q1 = 0; q1 < Q1; ++q1) { \
-                T tmp = {0}; \
                 for(int s1 = 0; s1 < S1; ++s1) { \
-                    tmp += a[q2*S1+s1] * b[q1*R1+s1]; \
+                    out[q2*Q1+q1] += \
+                      a[q2*S1+s1] *  \
+                      b[q1*R1+s1]; \
                 } \
-                out[q2*Q1+q1] = tmp * scale; \
             } \
         } \
     } /*}}}*/
@@ -334,7 +360,7 @@
         } \
     } /*}}}*/
 
-/* {{{ matrix_identity : out = a.T */
+/* {{{ matrix_identity : out = 1 */
 #define  Matrix_Decl_Identity(X) \
         _Matrix_Decl_Identity(X)
 #define _Matrix_Decl_Identity(A, S2, S1, T) \
