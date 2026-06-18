@@ -47,8 +47,8 @@ int main(void) {
 
     for(int i = 0; i < 1024; ++i) {
         for(int j = 0; j < 1024; ++j) {
-            a[i*1024+j] = (float)fast_rand() / 32767;
-            b[i*1024+j] = (float)fast_rand() / 32767;
+            a[i*1024+j] = (float)fast_rand() / 32767.f;
+            b[i*1024+j] = (float)fast_rand() / 32767.f;
         }
     }
 
