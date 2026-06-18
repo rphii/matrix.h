@@ -58,19 +58,20 @@ $ gcc example.c && ./a.out
 
 ## Available feature set
 
-- `matrix_XXX_mul_YYY ( out, A, B )` out = A x B
-- `matrix_XXX_mul_T_YYY ( out, A, B )` out = A x B.T
-- `matrix_XXX_mul_T_add_YYY ( out, A, B )` out += A x B.T
-- `matrix_XXX_mul_T_scale_YYY ( out, A, B, scale )` out = A x B.T x scale
-- `matrix_XXX_add ( out, A, B )` out = A + B
-- `matrix_XXX_add_inplace ( out, A )` out += A
-- `matrix_XXX_sub ( out, A, B )` out = A - B
-- `matrix_XXX_sub_inplace ( out, A )` out -= A
-- `matrix_XXX_cholesky_lower ( A ) -> int` A = cholesky\_lower(A)
-- `matrix_XXX_invert_lower ( A )` A = invert\_lower(A)
-- `matrix_XXX_transpose ( out, A )` out = A.T
-- `matrix_XXX_identity ( A )` A = identity
-- `matrix_XXX_copy ( out, A )` out = A
+- `T    matrix_XXX_sum ( A )` retval += A\[..\]\[..\] *(all indices summed up)*
+- `void matrix_XXX_mul_YYY ( out, A, B )` out = A x B
+- `void matrix_XXX_mul_T_YYY ( out, A, B )` out = A x B.T
+- `void matrix_XXX_mul_T_add_YYY ( out, A, B )` out += A x B.T
+- `void matrix_XXX_mul_T_scale_YYY ( out, A, B, scale )` out = A x B.T x scale
+- `void matrix_XXX_add ( out, A, B )` out = A + B
+- `void matrix_XXX_add_inplace ( out, A )` out += A
+- `void matrix_XXX_sub ( out, A, B )` out = A - B
+- `void matrix_XXX_sub_inplace ( out, A )` out -= A
+- `int  matrix_XXX_cholesky_lower ( A ) -> int` A = cholesky\_lower(A)
+- `void matrix_XXX_invert_lower ( A )` A = invert\_lower(A)
+- `void matrix_XXX_transpose ( out, A )` out = A.T
+- `void matrix_XXX_identity ( A )` A = identity
+- `void matrix_XXX_copy ( out, A )` out = A
 
 ## Implementation details
 
