@@ -4,6 +4,7 @@
 /* Create a helper define, specifying the type and dimension */
 #define f2x4    f, 2, 4, float
 #define f4x2    f, 4, 2, float
+#define f4x4    f, 4, 4, float
 
 /* Declare the type */
 Matrix_Decl(f2x4);
@@ -19,6 +20,7 @@ Matrix_Impl_Transpose(f4x2)
 
 /* Test */
 int main(void) {
+
     Matrix_f2x4 a = {
         1, 2, 3, 4,
         5, 6, 7, 8
