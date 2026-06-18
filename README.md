@@ -56,6 +56,10 @@ $ gcc example.c && ./a.out
     4.000    8.000
 ```
 
+## [Example 1024](example1024.c)
+
+_gcc example1024.c -O3 -march=native && ./a.out_
+
 ## Available feature set
 
 - `T    matrix_XXX_sum ( A )` retval += A\[..\]\[..\] *(all indices summed up)*
